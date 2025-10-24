@@ -11,4 +11,5 @@ process_dataset/experiment_dataset/
 
 # ukdale数据集
 ukdale_disaggregate/
+nilm_metadata/
 ukdale.h5

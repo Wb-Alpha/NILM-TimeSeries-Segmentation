@@ -1,0 +1,14 @@
+{
+  "Wash": 1,
+  "Rinsing": 2,
+  "Dehydrate": 3,
+  "Dry": 4,
+  "Freeze Auto": 1,
+  "Freeze Low Speed": 2,
+  "Air Supply Only": 3,
+  "Dehumidification": 4,
+  "Microwave": 1,
+  "Light Wave": 2,
+  "Thaw": 3,
+  "Sterilize": 4
+}
