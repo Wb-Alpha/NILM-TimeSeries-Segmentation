@@ -1,0 +1,14 @@
+# 每日单独存储的数据
+./dataset_by_day
+# 实验图片
+./exp_pic
+# 数据集
+./process_dataset/Air-condition
+./process_dataset/WashMachine
+./process_dataset/Microwave
+./process_dataset/dataset
+./process_dataset/experiment_dataset
+
+# ukdale数据集
+./ukdale_disaggregate
+ukdale.h5
