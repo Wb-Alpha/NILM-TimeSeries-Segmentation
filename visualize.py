@@ -10,6 +10,7 @@ visualize_config = {
     'dpi': 100
 }
 
+
 def general_data_print_function(selected_data, title='Data Visualization', max_y_value=800.0):
     """
     通用数据可视化函数
@@ -45,7 +46,7 @@ def general_data_print_function(selected_data, title='Data Visualization', max_y
 
 
 def visualize_first_active_data(file_path: str, threshold: float = 10.0, length: int = 1000,
-                      max_y_value: float = 800, title='Data Visualization'):
+                                max_y_value: float = 800, title='Data Visualization'):
     """
     设置第一列为index，并且找到第二列大于threshold的值，
     然后往后读取length个值，并且使用可视化工具对其进行可视化
@@ -121,6 +122,60 @@ def visualize_data_by_time(file_path: str, start_time: str, end_time: str, max_y
 
     return selected_data
 
+
 if __name__ == '__main__':
-   file_path = './process_dataset/experiment_dataset/BERT4NILM/aircondition/aircondition_freeze_low.dat'
-   df, start_time = visualize_first_active_data(file_path, threshold=10.0, length=500, max_y_value=300, title='aircondition freeze low')
+    # file_path = './process_dataset/experiment_dataset/BERT4NILM/aircondition/aircondition_freeze_low.dat'
+    # df, start_time = visualize_first_active_data(file_path, threshold=10.0, length=500, max_y_value=300, title='aircondition freeze low')
+    df = pd.read_csv(r'dataset_by_day/Air-condition/processed_peek_data_20250815.csv')
+    filtered_data = df['active power']
+    # 直接可视化所有数据
+    segment_df = pd.DataFrame({'active power': filtered_data[140000:145000]})
+    segment_df.index = range(len(segment_df))
+    general_data_print_function(
+        selected_data=segment_df,
+        title='Air Condition Segment',
+        max_y_value=300.0
+    )
+
+
+def visualize_gap_segments(file_path: str, gap: list, max_y_value: float = 800,
+                           title: str = 'Gap Segment Visualization'):
+    """
+    根据gap数组分割数据并分别可视化每个片段
+
+    :param file_path: 数据文件路径
+    :param gap: 分割点数组
+    :param max_y_value: Y轴最大值
+    :param title: 图表标题基础
+    :return: None
+    """
+    # 读取数据
+    df = pd.read_csv(file_path)
+    filtered_data = df['active power']
+
+    # 遍历gap数组，可视化每个片段
+    for i in range(len(gap) - 1):
+        start_idx = gap[i]
+        end_idx = gap[i + 1]
+
+        # 截取数据片段
+        segment_data = filtered_data.iloc[start_idx:end_idx]
+
+        # 创建片段DataFrame用于可视化函数
+        segment_df = pd.DataFrame({'active power': segment_data})
+        segment_df.index = range(len(segment_df))
+
+        # 可视化当前片段
+        segment_title = f"{title} - Segment {i + 1} ({start_idx} to {end_idx})"
+        general_data_print_function(
+            selected_data=segment_df,
+            title=segment_title,
+            max_y_value=max_y_value
+        )
+
+# # 在主程序中使用
+# if __name__ == '__main__':
+#     gap = [0, 481, 1160, 2054, 2940, 3259, 3599, 4085, 4737, 5303, 6000]
+#     file_path = r'process_dataset/Air-condition/Air_condition_10_avg_filter.csv'
+#     # visualize_gap_segments(file_path, gap, max_y_value=800, title='Air Condition Data Segments')
+#

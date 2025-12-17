@@ -1,5 +1,4 @@
 import pandas as pd, numpy as np
-import process_data
 
 
 def trans_status_data_to_vae_formulate(df: pd.DataFrame, status: int, data_len: int):

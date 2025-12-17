@@ -5,9 +5,8 @@ import pandas as pd
 import numpy as np
 import os, glob
 import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
-import process_dataset.process_data as process_dataset
-
+from datetime import timedelta
+from processed_data import calculate_status_active_times
 
 def data_preprocess(file_path):
     """
@@ -775,21 +774,21 @@ if __name__ == "__main__":
 
     # filter_data_by_status('./process_dataset/dataset/WashMachine.csv', 1, './process_dataset/dataset/WashMachine_Wash')
 
-    # file_path = r'./process_dataset/WashMachine/WashMachine.csv'
-    # df = pd.read_csv(file_path, index_col=0)
-    # df.index = pd.to_datetime(df.index, format='%Y-%m-%d %H:%M:%S')
-    # if 'status' in df.columns:
-    #     df['status'] = df['status'].round()
-    # if 'on/off status' in df.columns:
-    #     df['on/off status'] = df['on/off status'].round()
-    # active_count, total_duration, removed_periods = process_dataset.calculate_status_active_times(df, 4)
-    # df = clean_too_short_data(df, removed_periods, min_duration=120)
-    #
-    # print("处理完毕，打印处理后的数据")
-    # _, _, filter_periods = process_dataset.calculate_status_active_times(df, 4)
-    # for period in filter_periods:
-    #     print(f"时间段: {period}")
-    #
+    file_path = r'./process_dataset/Air-condition/Air_condition.csv'
+    df = pd.read_csv(file_path, index_col=0)
+    df.index = pd.to_datetime(df.index, format='%Y-%m-%d %H:%M:%S')
+    if 'status' in df.columns:
+        df['status'] = df['status'].round()
+    if 'on/off status' in df.columns:
+        df['on/off status'] = df['on/off status'].round()
+    active_count, total_duration, removed_periods = calculate_status_active_times(df, 3)
+    df = clean_too_short_data(df, removed_periods, min_duration=10)
+
+    print("处理完毕，打印处理后的数据")
+    _, _, filter_periods = calculate_status_active_times(df, 3)
+    for period in filter_periods:
+        print(f"时间段: {period}")
+
     # # 保存处理后的数据，覆盖原始文件
     # df.to_csv(file_path, index=True)
     # print(f"已保存处理后的数据到: {file_path}")

@@ -1,7 +1,9 @@
 # 每日单独存储的数据
 dataset_by_day/
-# 实验图片
+# 实验结果
 exp_pic/
+elec_feature_analyze/time_clustering/cluster_data/
+elec_feature_analyze/analyze_result/
 # 数据集
 process_dataset/Air-condition/
 process_dataset/WashMachine/
